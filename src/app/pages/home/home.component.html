@@ -1,0 +1,8 @@
+<div class="home">
+  <app-filters></app-filters>
+  <div class="books-list">
+    @for (book of books$ | async; track book._id) {
+    <app-book-card [book]="book"></app-book-card>
+    }
+  </div>
+</div>

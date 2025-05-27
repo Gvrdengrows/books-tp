@@ -1,0 +1,50 @@
+.card {
+  width: 250px;
+  gap: 16px;
+  align-items: center;
+
+  &__header {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    height: 100px;
+  }
+
+  &__content {
+    height: 200px;
+  }
+
+  &__title {
+    font-size: 18px;
+    line-height: 20px;
+
+    &:hover {
+      transform: scale(1.0125);
+      cursor: pointer;
+    }
+  }
+
+  &__subtitle {
+    font-size: 14px;
+    font-weight: 300;
+  }
+
+  &__footer {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0 16px 16px;
+    height: 70px;
+  }
+
+  &__image {
+    img {
+      height: 200px;
+    }
+  }
+
+  &__categories {
+    display: flex;
+    gap: 16px;
+  }
+}

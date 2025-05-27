@@ -1,0 +1,12 @@
+.header {
+    height: 60px;
+    margin-bottom: 16px;
+    background-color: var(--mat-sys-tertiary);
+}
+
+.header__navigation {
+    display: flex;
+    padding: 0 20px;
+    height: 100%;
+    align-items: center;
+}

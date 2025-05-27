@@ -1,0 +1,61 @@
+@let book = book$ | async;
+@if (book) {
+  <div class="book-detail">
+    <div class="book-detail__header">
+      <img
+        [src]="book.thumbnailUrl"
+        alt="{{ book.title }}"
+        class="book-detail__thumbnail"
+      />
+
+      <div class="book-detail__info">
+        <h2 class="book-detail__title">{{ book.title }}</h2>
+
+        <div class="book-detail__authors">
+          <span>Authors</span>
+          @for (author of book.authors; track author; let i = $index) {
+            <span>
+              {{ author }}{{ i < book.authors.length - 1 ? ", " : "" }}
+            </span>
+          }
+        </div>
+
+        <div class="book-detail__categories">
+          <span>Категории:</span>
+          <span *ngFor="let category of book.categories; let i = index">
+            {{ category }}{{ i < book.categories.length - 1 ? ", " : "" }}
+          </span>
+        </div>
+
+        <div class="book-detail__status">
+          <span>Статус: </span>
+          <span>{{ book.status }}</span>
+        </div>
+
+        <div class="book-detail__published-date">
+          <span>Дата публикации: </span>
+          <span>{{ book.publishedDate.date | date: "shortDate" }}</span>
+        </div>
+
+        <div class="book-detail__page-count">
+          <span>Количество страниц: </span>
+          <span>{{ book.pageCount }}</span>
+        </div>
+
+        <div class="book-detail__isbn">
+          <span>ISBN: </span>
+          <span>{{ book.isbn }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="book-detail__description">
+      <h3>Описание</h3>
+      <p>{{ book.longDescription }}</p>
+    </div>
+  </div>
+}
+
+<div *ngIf="!book">
+  <p>Книга не найдена.</p>
+</div>
