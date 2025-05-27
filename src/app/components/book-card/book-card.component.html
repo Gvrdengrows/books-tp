@@ -1,0 +1,26 @@
+<mat-card class="card">
+  <mat-card-header class="card__header">
+    <mat-card-title class="card__title">
+      <a [routerLink]="'/book/' + book.isbn">{{ book.title }}</a>
+    </mat-card-title>
+    <div class="card__subtitle">
+      @for (author of book.authors; track author) {
+        <span>{{ author }}</span>
+      }
+    </div>
+  </mat-card-header>
+
+  <mat-card-content class="card__content">
+    <div class="card__image">
+      <img [src]="book.thumbnailUrl || '/assets/images/no-image.png'" />
+    </div>
+  </mat-card-content>
+
+  <mat-card-footer class="card__footer">
+    <mat-chip-set class="card__categories">
+      @for (category of book.categories; track category) {
+        <mat-chip disableRipple>{{ category }}</mat-chip>
+      }
+    </mat-chip-set>
+  </mat-card-footer>
+</mat-card>
