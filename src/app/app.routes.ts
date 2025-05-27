@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import { BookPageComponent } from './pages/book-page/book-page.component';
+import { CreateBookComponent } from './pages/create-book/create-book.component';
 
 export const routes: Routes = [
   {
@@ -15,5 +16,9 @@ export const routes: Routes = [
   {
     path: 'book/:isbn',
     component: BookPageComponent,
+  },
+  {
+    path: 'create',
+    component: CreateBookComponent,
   },
 ];

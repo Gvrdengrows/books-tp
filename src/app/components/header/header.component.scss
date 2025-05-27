@@ -1,12 +1,13 @@
 .header {
-    height: 60px;
-    margin-bottom: 16px;
-    background-color: var(--mat-sys-tertiary);
-}
+  height: 60px;
+  margin-bottom: 16px;
+  background-color: var(--mat-sys-tertiary);
 
-.header__navigation {
+  &__actions {
     display: flex;
     padding: 0 20px;
     height: 100%;
     align-items: center;
+    justify-content: space-between;
+  }
 }
