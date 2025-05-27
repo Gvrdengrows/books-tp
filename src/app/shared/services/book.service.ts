@@ -10,12 +10,12 @@ export class BookService {
   private http = inject(HttpClient);
 
   getAllBooks() {
-    return this.http.get<Book[]>('/assets/books.json');
+    return this.http.get<Book[]>('http://localhost:8000/books');
   }
 
   getBook(isbn: string) {
     return this.http
-      .get<Book[]>('assets/books.json')
+      .get<Book[]>('http://localhost:8000/books')
       .pipe(map((books) => books.find((v) => v.isbn == isbn)));
   }
 }

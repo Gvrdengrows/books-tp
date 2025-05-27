@@ -21,24 +21,26 @@
         </div>
 
         <div class="book-detail__categories">
-          <span>Категории:</span>
-          <span *ngFor="let category of book.categories; let i = index">
-            {{ category }}{{ i < book.categories.length - 1 ? ", " : "" }}
-          </span>
+          <span>Categories:</span>
+          @for (category of book.categories; track category; let i = $index) {
+            <span>
+              {{ category }}{{ i < book.categories.length - 1 ? ", " : "" }}
+            </span>
+          }
         </div>
 
         <div class="book-detail__status">
-          <span>Статус: </span>
+          <span>Status: </span>
           <span>{{ book.status }}</span>
         </div>
 
         <div class="book-detail__published-date">
-          <span>Дата публикации: </span>
+          <span>Publication date: </span>
           <span>{{ book.publishedDate.date | date: "shortDate" }}</span>
         </div>
 
         <div class="book-detail__page-count">
-          <span>Количество страниц: </span>
+          <span>Page count: </span>
           <span>{{ book.pageCount }}</span>
         </div>
 
@@ -50,12 +52,12 @@
     </div>
 
     <div class="book-detail__description">
-      <h3>Описание</h3>
+      <h3>Description</h3>
       <p>{{ book.longDescription }}</p>
     </div>
   </div>
 }
 
 <div *ngIf="!book">
-  <p>Книга не найдена.</p>
+  <p>Loading...</p>
 </div>
