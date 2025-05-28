@@ -1,6 +1,5 @@
-import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { Component, inject, signal } from '@angular/core';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipInputEvent, MatChipsModule } from '@angular/material/chips';
@@ -9,6 +8,11 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule, MatLabel } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { Book } from '../../shared/models/book.model';
+import { generateIsbn } from '../../shared/utils/generateIsbn';
+import { BookService } from '../../shared/services/book.service';
+import { generateId } from '../../shared/utils/generateId';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-create-page',
@@ -19,7 +23,6 @@ import { MatInputModule } from '@angular/material/input';
     MatDatepickerModule,
     MatLabel,
     MatButtonModule,
-    MatFormFieldModule,
     MatChipsModule,
     ReactiveFormsModule,
     MatIconModule,
@@ -29,30 +32,82 @@ import { MatInputModule } from '@angular/material/input';
   styleUrl: './create-page.component.scss',
 })
 export class CreateBookComponent {
-  readonly reactiveKeywords = signal<string[]>([]);
-  readonly formControl = new FormControl(['angular']);
+  private fb = inject(FormBuilder);
+  private bookService = inject(BookService);
+  private _snackBar = inject(MatSnackBar);
+  authors = signal<string[]>([]);
+  categories = signal<string[]>([]);
 
-  announcer = inject(LiveAnnouncer);
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action);
+  }
 
-  removeReactiveKeyword(keyword: string) {
-    this.reactiveKeywords.update((keywords) => {
-      const index = keywords.indexOf(keyword);
-      if (index < 0) {
-        return keywords;
-      }
+  form = this.fb.group({
+    _id: generateId(),
+    title: [''],
+    authors: [],
+    categories: [],
+    isbn: generateIsbn(),
+    longDescription: '',
+    pageCount: 0,
+    date: '',
+    publishedDate: {
+      date: '',
+    },
+    shortDescription: '',
+    status: '',
+    thumbnailUrl: '',
+  });
 
-      keywords.splice(index, 1);
-      this.announcer.announce(`removed ${keyword} from reactive form`);
-      return [...keywords];
+  postBook() {
+    const newBook = this.form.value as Book;
+    newBook.authors = this.authors();
+    newBook.categories = this.categories();
+    newBook.publishedDate.date = this.form.controls.date.value;
+    this.bookService.postBook(newBook).subscribe(() => {
+      this.openSnackBar('You published a book', 'Close');
     });
   }
 
-  addReactiveKeyword(event: MatChipInputEvent): void {
+  removeAuthors(keyword: string) {
+    this.authors.update((author) => {
+      const index = author.indexOf(keyword);
+      if (index < 0) {
+        return author;
+      }
+
+      author.splice(index, 1);
+      return [...author];
+    });
+  }
+
+  addAuthor(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();
 
     if (value) {
-      this.reactiveKeywords.update((keywords) => [...keywords, value]);
-      this.announcer.announce(`added ${value} to reactive form`);
+      this.authors.update((author) => [...author, value]);
+    }
+
+    event.chipInput!.clear();
+  }
+
+  removeCategory(keyword: string) {
+    this.categories.update((category) => {
+      const index = category.indexOf(keyword);
+      if (index < 0) {
+        return category;
+      }
+
+      category.splice(index, 1);
+      return [...category];
+    });
+  }
+
+  addCategory(event: MatChipInputEvent): void {
+    const value = (event.value || '').trim();
+
+    if (value) {
+      this.categories.update((category) => [...category, value]);
     }
 
     event.chipInput!.clear();
