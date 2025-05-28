@@ -18,4 +18,9 @@ export class BookService {
       .get<Book[]>('http://localhost:8000/books')
       .pipe(map((books) => books.find((v) => v.isbn == isbn)));
   }
+
+  postBook(book: Book) {
+    console.log(book);
+    return this.http.post('http://localhost:8000/books', book);
+  }
 }
