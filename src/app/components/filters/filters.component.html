@@ -1,9 +1,11 @@
 <form class="filters" [formGroup]="form">
   <mat-form-field>
-    <mat-label>Select</mat-label>
-    <mat-select formControlName="genre">
-      <mat-option value="one">First option</mat-option>
-      <mat-option value="two">Second option</mat-option>
+    <mat-label>Category</mat-label>
+    <mat-select formControlName="category">
+      <mat-option value="Open Source">Open Source</mat-option>
+      <mat-option value="Mobile">Mobile</mat-option>
+      <mat-option value="Java">Java</mat-option>
+      <mat-option value="Web Development">Web Development</mat-option>
     </mat-select>
   </mat-form-field>
   <mat-form-field appearance="fill">
@@ -14,5 +16,5 @@
     <mat-label>Author</mat-label>
     <input formControlName="author" matInput placeholder="Placeholder" />
   </mat-form-field>
-  <button mat-raised-button>Find</button>
+  <button mat-raised-button type="button" (click)="find()">Find</button>
 </form>
